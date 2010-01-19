@@ -10,6 +10,6 @@ fun! actions#Bind(lhs)
   let index = tlib#input#List('si', 'select action which will be bound to '.a:lhs, labels)
   let a = values(s:c['actions'])[index-1]
   let rhs = funcref#Call(a['action'])
-  exec 'noremap '.a:lhs.' '.get(a,'buffer','').' '.rhs.get(a,'cr','<cr>')
-  return  'noremap '.a:lhs.' '.get(a,'buffer','').' '.rhs.get(a,'cr','<cr>')
+  let rhs_s = type(rhs) == type([]) ? join(rhs,'<bar>') : rhs
+  exec 'noremap '.a:lhs.' '.get(a,'buffer','').' '.rhs_s.get(a,'cr','<cr>')
 endf

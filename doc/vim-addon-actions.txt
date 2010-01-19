@@ -14,3 +14,7 @@ Example usage adding an action running make: >
 
   You can use the vim-addon-backrgound-cmd to run compilations or tagging
   commands in background!
+
+  If you want to run multiple commands in order return a list of strings.
+  They'll be joined by "<bar>". So use exec "your command" if it doesn't support
+  bang
