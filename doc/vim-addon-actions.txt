@@ -1,0 +1,13 @@
+*actions*  this addon provides a list of actions which can be mapped to keys  
+                    Author: Marc Weber, marco-oweber@gmx.de
+
+-----------------------------------------------------------------------
+HOWTO~
+
+Example usage adding an action running make: >
+
+  call actions#AddAction("run make",{'buffer':'<buffer>', 'action':'make')
+<
+  more advanced example which does some lazy configuring: >
+  call actions#AddAction("run make",{'buffer':'<buffer>', 'action': funcref#Function('return "make -f ".FindMakeFile()') })
+<
