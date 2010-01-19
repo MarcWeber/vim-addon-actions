@@ -11,5 +11,5 @@ fun! actions#Bind(lhs)
   let a = values(s:c['actions'])[index-1]
   let rhs = funcref#Call(a['action'])
   let rhs_s = type(rhs) == type([]) ? join(rhs,'<bar>') : rhs
-  exec 'noremap '.a:lhs.' '.get(a,'buffer','').' '.rhs_s.get(a,'cr','<cr>')
+  exec 'noremap '.a:lhs.' '.get(a,'buffer','').' :'.rhs_s.get(a,'cr','<cr>')
 endf
