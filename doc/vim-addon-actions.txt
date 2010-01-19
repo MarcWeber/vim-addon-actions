@@ -11,3 +11,6 @@ Example usage adding an action running make: >
   more advanced example which does some lazy configuring: >
   call actions#AddAction("run make",{'buffer':'<buffer>', 'action': funcref#Function('return "make -f ".FindMakeFile()') })
 <
+
+  You can use the vim-addon-backrgound-cmd to run compilations or tagging
+  commands in background!
