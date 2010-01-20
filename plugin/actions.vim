@@ -9,3 +9,7 @@ fun! s:Init()
 endf
 
 call s:Init()
+
+command! SetActionOnWrite :call actions#SetActionOnWrite()
+call actions#AddAction("last cmd command",{'buffer':'', 'action':funcref#Function('return histget("cmd",-1)')})
+call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})

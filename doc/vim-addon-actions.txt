@@ -12,9 +12,16 @@ Example usage adding an action running make: >
   call actions#AddAction("run make",{'buffer':'<buffer>', 'action': funcref#Function('return "make -f ".FindMakeFile()') })
 <
 
-  You can use the vim-addon-backrgound-cmd to run compilations or tagging
-  commands in background!
+  Then you press <s-F2> to assign an action to the f2 key. Have a look at the
+  default key assignments in plugin/actions.vim
+
+  You can also use >
+  SetActionOnWrite
+< to run an action whenever you write a buffer. (Also see 'autowrite')
 
   If you want to run multiple commands in order return a list of strings.
   They'll be joined by "<bar>". So use exec "your command" if it doesn't support
   bang
+
+  TIP: You can use the vim-addon-backrgound-cmd to run compilations or tagging
+  commands in background!
