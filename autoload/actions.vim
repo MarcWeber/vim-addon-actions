@@ -36,3 +36,8 @@ fun! actions#SetActionOnWrite(any)
   exec 'au BufWritePost '.(a:any ? '*' : '<buffer>' ).' '.a['rhs']
   aug END
 endf
+
+fun! actions#VerifyArgs(args, ...)
+  let extraLabel = a:0 > 0 ? a:1 : ""
+  return eval(input('cmd '.extraLabel.': ', string(a:args)))
+endf
