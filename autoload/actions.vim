@@ -37,7 +37,26 @@ fun! actions#SetActionOnWrite(any)
   aug END
 endf
 
+fun! actions#CompileRHS()
+  let args = ["make"]
+  let args = eval(input("ruby command:", string(args)))
+  return "call bg#RunQF(".string(args).", 'c', 0)"
+endfun
+
+fun! actions#CommandFromHistory()
+  let list = []
+  for nr in range(-1, -10, -1)
+    call add(list,histget("cmd",nr))
+  endfor
+  return tlib#input#List("s","select command from history", list)
+endf
+
+" depreceated name
 fun! actions#VerifyArgs(args, ...)
+  return call(function('actions#ConfirmArgs'), [a:args] + a:000)
+endfun
+
+fun! actions#ConfirmArgs(args, ...)
   let extraLabel = a:0 > 0 ? a:1 : ""
   return eval(input('cmd '.extraLabel.': ', string(a:args)))
 endf
