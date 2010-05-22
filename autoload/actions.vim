@@ -37,11 +37,19 @@ fun! actions#SetActionOnWrite(any)
   aug END
 endf
 
-fun! actions#CompileRHS()
+fun! actions#CompileRHSMake()
   let args = ["make"]
-  let args = eval(input("ruby command:", string(args)))
+  let args = actions#ConfirmArgs(args)
   return "call bg#RunQF(".string(args).", 'c', 0)"
 endfun
+
+" cmds: can be used to set errorformat etc
+" cmd: the command and arguments. current fle name will be appended by default
+fun! actions#CompileRHSSimple(cmds, cmd)
+  let args = a:cmd + [expand('%')]
+  let args = actions#ConfirmArgs(args)
+  return a:cmds + ["call bg#RunQF(".string(args).", 'c', 0)"]
+endf
 
 fun! actions#CommandFromHistory()
   let list = []

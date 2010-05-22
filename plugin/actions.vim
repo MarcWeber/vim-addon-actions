@@ -15,4 +15,5 @@ command! ActionOnWriteBuffer :call actions#SetActionOnWrite(0)
 
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})
-call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHS')})
+call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHSMake')})
+call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-ggdb', '-O0']]})})
