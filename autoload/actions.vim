@@ -46,7 +46,8 @@ endfun
 " cmds: can be used to set errorformat etc
 " cmd: the command and arguments. current fle name will be appended by default
 fun! actions#CompileRHSSimple(cmds, cmd)
-  let args = a:cmd + [expand('%')]
+  let args = a:cmd
+  let args = map(args,'library#Call(v:val)') " evaluate funcref#Function arguments
   let args = actions#ConfirmArgs(args)
   return a:cmds + ["call bg#RunQF(".string(args).", 'c', 0)"]
 endf
