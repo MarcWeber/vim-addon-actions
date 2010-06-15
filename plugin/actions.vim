@@ -18,3 +18,5 @@ call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>',
 call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHSMake')})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
+" scala see addon vim-addon-scala
+" haxe see addon vim-haxe
