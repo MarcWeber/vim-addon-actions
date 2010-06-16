@@ -26,6 +26,22 @@ Example usage adding an action running make: >
   TIP: You can use the vim-addon-backrgound-cmd to run compilations or tagging
   commands in background!
 
+
+-----------------------------------------------------------------------
+plugins supporting vim-addon-actions~
+
+3rd party plugins:
+  SingleCompile: http://www.vim.org/scripts/script.php?script_id=3115
+
+many of my plugins:
+  vim-addon-background-cmd
+  vim-addon-fcsh
+  vim-addon-haskell
+  vim-addon-nix
+  vim-addon-sbt
+  vim-haxe
+  vim-ruby-debugger
+
 -----------------------------------------------------------------------
 CUSTOMIZATION~
 
