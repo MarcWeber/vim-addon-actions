@@ -57,3 +57,7 @@ related work:
 
   SingleCompile : Let user compile or run a single source file conveniently
   http://www.vim.org/scripts/script.php?script_id=3115
+
+  Quickrun:
+  http://www.vim.org/scripts/script.php?script_id=3146
+  http://github.com/thinca/vim-quickrun/blob/master/plugin/quickrun.vim
