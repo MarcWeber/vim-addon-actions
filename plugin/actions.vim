@@ -10,8 +10,8 @@ endf
 
 call s:Init()
 
-command! ActionOnWrite :call actions#SetActionOnWrite(1)
-command! ActionOnWriteBuffer :call actions#SetActionOnWrite(0)
+command! -bang ActionOnWrite :call actions#SetActionOnWrite(1, "<bang>")
+command! -bang ActionOnWriteBuffer :call actions#SetActionOnWrite(0, "<bang>")
 
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})

@@ -28,13 +28,17 @@ fun! actions#Bind(lhs)
   exec 'noremap '.get(a,'buffer','').' '.a:lhs.' :'.a['rhs'].get(a,'cr','<cr>')
 endf
 
-fun! actions#SetActionOnWrite(any)
+fun! actions#SetActionOnWrite(any, bang)
   let a = actions#ActionFromUser('')
   silent! aug! ACTION_ON_WRITE
 
   aug ACTION_ON_WRITE
   exec 'au BufWritePost '.(a:any ? '*' : '<buffer>' ).' '.a['rhs']
   aug END
+
+  if a:bang == '!'
+    exec a['rhs']
+  endif
 endf
 
 fun! actions#CompileRHSMake()
