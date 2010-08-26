@@ -28,6 +28,11 @@ Example usage adding an action running make: >
   TIP: You can use the vim-addon-backrgound-cmd to run compilations or tagging
   commands in background!
 
+  Real  world example from vim-addon-ocmal: >
+  let s:efm = 'set efm=%+AFile\ \"%f\"\\,\ line\ %l\\,\ characters\ %c-%*\\d:,%Z%m'
+  call actions#AddAction('ocamlc current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[s:efm], ["ocamlc", '-annot', '-o', funcref#Function('return expand("%:r:t")'), funcref#Function('return expand("%")')]]})})
+  call actions#AddAction('ocamlc run result', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return "./".expand("%:r:t")')]]})})
+<
 
 -----------------------------------------------------------------------
 plugins supporting vim-addon-actions~
@@ -42,7 +47,10 @@ many of my plugins:
   vim-addon-haskell
   vim-addon-nix
   vim-addon-sbt
+  vim-addon-ocaml
+  vim-addon-povray
   vim-haxe
+  ...
 
 -----------------------------------------------------------------------
 CUSTOMIZATION~
