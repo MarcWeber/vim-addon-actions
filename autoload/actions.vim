@@ -1,6 +1,11 @@
 exec scriptmanager#DefineAndBind('s:c','g:vim_actions', '{}')
 let s:c['actions'] = get(s:c,'actions',{})
 
+if !exists('g:prevent_action')
+  " sometimes you want to write a buffer without triggering the action
+  let g:prevent_action = 0
+endif
+
 " this list will grow over time. But not much enough to care about
 let s:c['bound_actions'] = get(s:c,'bound_actions',[])
 let s:bound_actions = s:c['bound_actions']
@@ -33,7 +38,7 @@ fun! actions#SetActionOnWrite(any, bang)
   silent! aug! ACTION_ON_WRITE
 
   aug ACTION_ON_WRITE
-  exec 'au BufWritePost '.(a:any ? '*' : '<buffer>' ).' '.a['rhs']
+    exec 'au BufWritePost '.(a:any ? '*' : '<buffer>' ).' if !g:prevent_action | '.a['rhs'].' | endif'
   aug END
 
   if a:bang == '!'
