@@ -35,9 +35,9 @@ endf
 
 fun! actions#SetActionOnWrite(any, bang)
   let a = actions#ActionFromUser('')
-  silent! aug! ACTION_ON_WRITE
 
   aug ACTION_ON_WRITE
+    au!
     exec 'au BufWritePost '.(a:any ? '*' : '<buffer>' ).' if !g:prevent_action | '.a['rhs'].' | endif'
   aug END
 
