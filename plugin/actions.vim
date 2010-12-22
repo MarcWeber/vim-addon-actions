@@ -16,6 +16,7 @@ command! -bang ActionOnWriteBuffer :call actions#SetActionOnWrite(0, "<bang>")
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})
 call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHSMake')})
+call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 " scala see addon vim-addon-scala

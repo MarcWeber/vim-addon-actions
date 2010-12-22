@@ -78,3 +78,19 @@ fun! actions#ConfirmArgs(args, ...)
   let extraLabel = a:0 > 0 ? a:1 : ""
   return eval(input('cmd '.extraLabel.': ', string(a:args)))
 endf
+
+" this is used multiple times:
+" global state is bad - ther is no other way
+let s:glob_patterns = []
+fun! actions#AskFile(title, list_of_glob_patterns)
+  let s:glob_patterns = a:list_of_glob_patterns
+  return input(a:title,'','customlist,actions#InputCompletion')
+endf
+
+fun! actions#InputCompletion(ArgLead, CmdLine, CursorPos)
+  let files = []
+  for p in s:glob_patterns
+    call extend(files, split(glob(p), "\n") )
+  endfor
+  return filter(files,'v:val =~'.string(a:ArgLead))
+endf
