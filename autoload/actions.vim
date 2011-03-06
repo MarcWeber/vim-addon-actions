@@ -1,4 +1,4 @@
-exec scriptmanager#DefineAndBind('s:c','g:vim_actions', '{}')
+exec vam#DefineAndBind('s:c','g:vim_actions', '{}')
 let s:c['actions'] = get(s:c,'actions',{})
 
 if !exists('g:prevent_action')
