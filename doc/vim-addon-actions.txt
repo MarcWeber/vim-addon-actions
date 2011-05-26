@@ -71,3 +71,6 @@ related work:
   Quickrun:
   http://www.vim.org/scripts/script.php?script_id=3146
   http://github.com/thinca/vim-quickrun/blob/master/plugin/quickrun.vim
+
+  Compile:
+  http://www.vim.org/scripts/script.php?script_id=3462
