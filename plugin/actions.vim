@@ -20,6 +20,11 @@ call actions#AddAction('perl current file', {'action': funcref#Function('actions
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('shebang (run this script)', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return expand("%:p")')]]})})
+
+call actions#AddAction('run php background', {'action': funcref#Function('vim_addon_other_php#RunPHPRHS', {'args': [1]})})
+call actions#AddAction('run python background', {'action': funcref#Function('vim_addon_other_python#RunPythonRHS', {'args': [1]})})
+call actions#AddAction('run python using make', {'action': funcref#Function('vim_addon_other_python#RunPythonRHS', {'args': [0]})})
+
 " scala see addon vim-addon-scala
 " haxe see addon vim-haxe
 "
