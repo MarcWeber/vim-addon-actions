@@ -17,7 +17,10 @@ command! -bang ActionOnWriteBuffer :call actions#SetActionOnWrite(0, "<bang>")
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})
 call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHSMake')})
-call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["perl", funcref#Function('return expand("%")')]]})})
+" perl: not using all of $VIMRUNTIME/compiler/perl.vim because if you dont'
+" flush valuable stdout output could be lost cause errors appear before stdout
+" dump and the compiler error format drops those lines
+call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.'], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('shebang (run this script)', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return expand("%:p")')]]})})
