@@ -29,6 +29,9 @@ call actions#AddAction('run php background', {'action': funcref#Function('action
 call actions#AddAction('run python background', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [1]})})
 call actions#AddAction('run python using make', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [0]})})
 
+
+call actions#AddAction('sass', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["sass", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".css"')]]})})
+
 " scala see addon vim-addon-scala
 " haxe see addon vim-haxe
 "

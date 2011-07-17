@@ -63,6 +63,11 @@ CUSTOMIZATION~
 
 
 -----------------------------------------------------------------------
+BUGS~
+autoload/actions.vim contains too much code - more than is used for setting it
+up. It should define AddAction and actions#Bind only.
+
+-----------------------------------------------------------------------
 related work:
 
   SingleCompile : Let user compile or run a single source file conveniently
