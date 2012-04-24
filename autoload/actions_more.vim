@@ -71,3 +71,16 @@ fun! actions_more#RunPHPRHS(background)
     \ : ['exec "set efm='.ef.'" ',"set makeprg=python", "make ".join(args, ' ') ]
   " think about proper quoting in : case
 endf
+
+
+fun! actions_more#RunRUBYRHS(background)
+  " errorformat taken from http://www.vim.org/scripts/script.php?script_id=477
+  let ef= '%f:%l:%m'
+
+  let args = ["ruby"] + [ expand('%')]
+  let args = eval(input('command args: ', string(args)))
+  return a:background
+    \ ? "call bg#RunQF(".string(args).", 'c', ".string(ef).")"
+    \ : ['exec "set efm='.ef.'" ',"set makeprg=python", "make ".join(args, ' ') ]
+  " think about proper quoting in : case
+endf

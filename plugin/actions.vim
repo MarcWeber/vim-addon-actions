@@ -20,10 +20,13 @@ call actions#AddAction('run make', {'action': funcref#Function('actions#CompileR
 " perl: not using all of $VIMRUNTIME/compiler/perl.vim because if you dont'
 " flush valuable stdout output could be lost cause errors appear before stdout
 " dump and the compiler error format drops those lines
-call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.'], ["perl", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.,\%m\ at\ %f\ line\ %l\,\ at\ end\ of\ line,%m\ at\ %f\ line\ %l\,\ near'], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('shebang (run this script)', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return expand("%:p")')]]})})
+
+
+call actions#AddAction('run ruby background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1]})})
 
 call actions#AddAction('run php background', {'action': funcref#Function('actions_more#RunPHPRHS', {'args': [1]})})
 call actions#AddAction('run python background', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [1]})})
@@ -31,6 +34,7 @@ call actions#AddAction('run python using make', {'action': funcref#Function('act
 
 
 call actions#AddAction('sass', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["sass", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".css"')]]})})
+call actions#AddAction('haml', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=Syntax\ error\ on\ line\ %l:%m,Haml\ error\ on\ line\ %l:%m'], ["haml", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".html"')]]})})
 
 " scala see addon vim-addon-scala
 " haxe see addon vim-haxe

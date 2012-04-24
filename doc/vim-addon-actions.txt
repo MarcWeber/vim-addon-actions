@@ -1,6 +1,32 @@
 *actions*  this addon provides a list of actions which can be mapped to keys  
                     Author: Marc Weber, marco-oweber@gmx.de
 
+
+-----------------------------------------------------------------------
+HOWTO for end users / CUSTOMIZATION~
+
+  There are pairs of key combinations:
+  - a combination setting an action to the second key combination
+  - the second key combination running the action.
+
+  The default combinations are <s-F2> assigning an action to <F2> etc, see
+  plugin/actions.vim.
+
+  You can override the default mappings. This example will let you use \a to
+  assign a mapping to <c-a>: >
+  let g:vim_actions = {}
+  let g:vim_actions['bindable_keys'] = [ ['\a', '<c-a>'] ]
+
+< Assigning an action means choosing an action from the lits of available
+  actions. You do so by typing some chars, then using up/down keys and finally
+  pressing <cr>
+  Additional plugins can register additional actions.
+  I use it for compiling code or running interpreters only.
+
+  The special command >
+  ActionOnWriteBuffer
+< is special: it always runs the action whenever you write any buffger.
+
 -----------------------------------------------------------------------
 HOWTO~
 
@@ -52,13 +78,6 @@ many of my plugins:
   vim-haxe
   ...
 
------------------------------------------------------------------------
-CUSTOMIZATION~
-
-  You can override the default mappings. This example will let you use \a to
-  assign a mapping to <c-a>: >
-  let g:vim_actions = {}
-  let g:vim_actions['bindable_keys'] = [ ['\a', '<c-a>'] ]
 <
 
 
