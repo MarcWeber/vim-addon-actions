@@ -73,11 +73,25 @@ fun! actions_more#RunPHPRHS(background)
 endf
 
 
-fun! actions_more#RunRUBYRHS(background)
+fun! actions_more#RunRUBYRHS(background, cmd)
   " errorformat taken from http://www.vim.org/scripts/script.php?script_id=477
-  let ef= '%f:%l:%m'
+  let ef= 
+        \ '\ \ \ \ \ \#\ %f:%l:%m,'
+        \ .'\	from\ %f:%l:%m,%f:%l:%m'
 
-  let args = ["ruby"] + [ expand('%')]
+  let args = [a:cmd] + [ expand('%')]
+  let args = eval(input('command args: ', string(args)))
+  return a:background
+    \ ? "call bg#RunQF(".string(args).", 'c', ".string(ef).")"
+    \ : ['exec "set efm='.ef.'" ',"set makeprg=python", "make ".join(args, ' ') ]
+  " think about proper quoting in : case
+endf
+
+fun! actions_more#RunDDCRHS(background)
+  " errorformat taken from http://www.vim.org/scripts/script.php?script_id=477
+  let ef= '%f:%l:%c'
+
+  let args = ["ddc"] + [ expand('%')]
   let args = eval(input('command args: ', string(args)))
   return a:background
     \ ? "call bg#RunQF(".string(args).", 'c', ".string(ef).")"

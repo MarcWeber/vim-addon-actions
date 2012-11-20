@@ -1,7 +1,19 @@
 " exec vam#DefineAndBind('s:c','g:vim_actions', '{}')
 if !exists('g:vim_actions') | let g:vim_actions = {} | endif | let s:c = g:vim_actions
 
-let s:c['bindable_keys'] = get(s:c, 'bindable_keys', [ ['<s-f2>', '<f2>'], ['<s-f3>', '<f3>'], ['<s-f4>', '<f4>'], ['<s-f5>', '<f5>'], ['<s-f6>', '<f6>'], ['<s-f7>', '<f7>'] ] )
+fun! s:F(n)
+  if has('gui_running')
+    return ['<s-f'.a:n.'>', '<f'.a:n.'>']
+  else
+    " shift-FN keys don't work in console, thus use \FN to define
+    return ['\<f'.a:n.'>', '<f'.a:n.'>']
+  end
+endf
+
+" default mappings:
+" gui: <s-FN> set action to FN key
+" console: \FN set action to FN key
+let s:c['bindable_keys'] = get(s:c, 'bindable_keys', map(range(2,7), 's:F(v:val)'))
 
 fun! s:Init()
   for l in s:c['bindable_keys']
@@ -26,7 +38,10 @@ call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('ac
 call actions#AddAction('shebang (run this script)', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return expand("%:p")')]]})})
 
 
-call actions#AddAction('run ruby background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1]})})
+call actions#AddAction('run ddc background', {'action': funcref#Function('actions_more#RunDDCRHS', {'args': [1]})})
+
+call actions#AddAction('run ruby background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, 'ruby']})})
+call actions#AddAction('run rspec background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, 'rspec']})})
 
 call actions#AddAction('run php background', {'action': funcref#Function('actions_more#RunPHPRHS', {'args': [1]})})
 call actions#AddAction('run python background', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [1]})})
