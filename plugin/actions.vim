@@ -29,6 +29,8 @@ command! -bang ActionOnWriteBuffer :call actions#SetActionOnWrite(0, "<bang>")
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})
 call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHSMake')})
+call actions#AddAction('cmake', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=CMake\ Error\ at\ %f:%l\ %m'], funcref#Function('return ["cmake","../"]')]})})
+
 " perl: not using all of $VIMRUNTIME/compiler/perl.vim because if you dont'
 " flush valuable stdout output could be lost cause errors appear before stdout
 " dump and the compiler error format drops those lines
