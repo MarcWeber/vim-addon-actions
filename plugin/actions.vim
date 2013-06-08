@@ -44,6 +44,7 @@ call actions#AddAction('run ddc background', {'action': funcref#Function('action
 
 call actions#AddAction('run ruby background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, 'ruby']})})
 call actions#AddAction('run rspec background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, 'rspec']})})
+call actions#AddAction('run rake -t background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, 'rake', '-t']})})
 
 call actions#AddAction('run php background', {'action': funcref#Function('actions_more#RunPHPRHS', {'args': [1]})})
 call actions#AddAction('run python background', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [1]})})
