@@ -79,6 +79,11 @@ fun! actions#SetActionOnWrite(any, bang)
     exec 'au BufWritePost '.(a:any ? '*' : '<buffer>' ).' if !g:prevent_action | '.a['rhs'].' | endif'
   aug END
 
+  let action_name = get(a, 'follow_up', '')
+  if action_name != ""
+    call actions#Map("", action_name)
+  endif
+
   if a:bang == '!'
     exec a['rhs']
   endif
@@ -92,7 +97,7 @@ endfun
 
 " cmds: can be used to set errorformat etc
 " cmd: the command and arguments. current fle name will be appended by default
-fun! actions#CompileRHSSimple(cmds, cmd)
+fun! actions#CompileRHSSimple(cmds, cmd) abort
   let args = funcref#Call(a:cmd)
   let args = map(args,'funcref#Call(v:val)') " evaluate funcref#Function arguments
   let args = actions#ConfirmArgs(args)
