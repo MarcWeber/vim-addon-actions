@@ -3,53 +3,42 @@
 
 
 -----------------------------------------------------------------------
-HOWTO for end users / CUSTOMIZATION~
-
-  There are pairs of key combinations:
-  - a combination setting an action to the second key combination
-  - the second key combination running the action.
-
-  The default combinations are <s-F2> assigning an action to <F2> etc, see
-  plugin/actions.vim.
-
-  You can override the default mappings. This example will let you use \a to
-  assign a mapping to <c-a>: >
-  let g:vim_actions = {}
-  let g:vim_actions['bindable_keys'] = [ ['\a', '<c-a>'] ]
-
-< Assigning an action means choosing an action from the lits of available
-  actions. You do so by typing some chars, then using up/down keys and finally
-  pressing <cr>
-  Additional plugins can register additional actions.
-  I use it for compiling code or running interpreters only.
-
-  The special command >
-  ActionOnWriteBuffer
-< is special: it always runs the action whenever you write any buffger.
-
 -----------------------------------------------------------------------
 HOWTO~
 
 Example usage adding an action running make: >
 
-  call actions#AddAction("run make",{'buffer':'<buffer>', 'action':'make'})
-<
+  " ~/.vimrc:
+  call actions#AddAction("run make",{
+    \ 'buffer':'<buffer>'\
+    \, 'action':'make'
+    \, 'follow_up': 'run compiler result'
+    \ })
+
+  " while running vim one of:
+  :ActionOnWrite(Buffer)[!]
+  :MapAction
+
+< then select the action to run, select lhs mapping, be happy
+
+  MapAction will also try to map the follow up action 'run compiler result' if
+  you don't empty the key to map to.
+  Thus F2 compiles, F3 runs (by default)
+
   more advanced example which does some lazy configuring: >
   call actions#AddAction("run make",{'buffer':'<buffer>', 'action': funcref#Function('return "make -f ".FindMakeFile()') })
 <
-
-  Then you press <s-F2> to assign an action to the f2 key. Have a look at the
-  default key assignments in plugin/actions.vim
-
   You can also use >
   ActionOnWrite[!]
 < to run an action whenever you write a buffer. (Also see 'autowrite')
+  ! means: run it immeditely
+
+  setting error format for rake, make~
+  See s:set_efm example at plugin/actions.vim
 
   If you want to run multiple commands in order return a list of strings.
   They'll be joined by "<bar>". So use exec "your command" if it doesn't support
   bang
-
-  If you use bang (add the ! to the command) the command will be run once
 
   TIP: You can use the vim-addon-backrgound-cmd to run compilations or tagging
   commands in background!
@@ -101,3 +90,8 @@ related work:
 
   Verun:
   http://www.vim.org/scripts/script.php?script_id=4522
+
+
+HOWTO for end users / CUSTOMIZATION~
+
+getting started quickly~

@@ -79,7 +79,7 @@ fun! actions_more#RunRUBYRHS(background, cmd)
         \ '\ \ \ \ \ \#\ %f:%l:%m,'
         \ .'\	from\ %f:%l:%m,%f:%l:%m'
 
-  let args = [a:cmd] + [ expand('%')]
+  let args = a:cmd
   let args = eval(input('command args: ', string(args)))
   return a:background
     \ ? "call bg#RunQF(".string(args).", 'c', ".string(ef).")"
