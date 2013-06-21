@@ -3,10 +3,9 @@
 
 
 -----------------------------------------------------------------------
------------------------------------------------------------------------
 HOWTO~
 
-Example usage adding an action running make: >
+  Example usage adding an action running make: >
 
   " ~/.vimrc:
   call actions#AddAction("run make",{
