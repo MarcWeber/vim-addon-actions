@@ -68,7 +68,6 @@ fun! actions#Map(key, action)
     let a = actions#PrepareAction(action_name)
     exec 'noremap '.get(a,'buffer','').' '.key.' :'.a['rhs'].get(a,'cr','<cr>')
     let action_name = get(a, 'follow_up', '')
-    if action_name != ''
   endwhile
 endf
 
