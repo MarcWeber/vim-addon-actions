@@ -9,7 +9,7 @@ command! -bang ActionOnWriteBuffer :call actions#SetActionOnWrite(0, "<bang>")
 command! -bang MapAction :call actions#Map("", "")
 
 " this requires github.com/MarcWeber/vim-addon-erroformats:
-let s:set_efm =  funcref#Function('return "debug call vim_addon_errorformats#SetErrorFormat(".string(vim_addon_errorformats#InputErrorFormatNames()).")"')
+let s:set_efm =  funcref#Function('return "call vim_addon_errorformats#SetErrorFormat(".string(vim_addon_errorformats#InputErrorFormatNames()).")"')
 
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})
