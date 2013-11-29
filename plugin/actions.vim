@@ -27,8 +27,8 @@ call actions#AddAction('shebang (run this script)', {'action': funcref#Function(
 
 call actions#AddAction('run ddc background', {'action': funcref#Function('actions_more#RunDDCRHS', {'args': [1]})})
 
-call actions#AddAction('run ruby background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, ['ruby', funcref#Function('return expand("%")')]]})})
-call actions#AddAction('run rspec background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, ['rspec', funcref#Function('return expand("%")')]]})})
+call actions#AddAction('run ruby background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, funcref#Function('return ["ruby", expand("%")]')]})})
+call actions#AddAction('run rspec background', {'action': funcref#Function('actions_more#RunRUBYRHS', {'args': [1, funcref#Function('return ["rspec", expand("%")]')]})})
 
 for cmd in ['rake', 'drake', 'make']
   call actions#AddAction(cmd.' -j custom error format', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[s:set_efm], [cmd, '-j', funcref#Function('return split(system("nproc"), "\n")[0]')]]})})
