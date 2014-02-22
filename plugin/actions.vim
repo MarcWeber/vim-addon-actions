@@ -43,6 +43,8 @@ call actions#AddAction('sass', {'action': funcref#Function('actions#CompileRHSSi
 call actions#AddAction('haml', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=Syntax\ error\ on\ line\ %l:%m,Haml\ error\ on\ line\ %l:%m'], ["haml", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".html"')]]})})
 
 
+call actions#AddAction('run rust', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f:%l:%c%m'], ["rustc", funcref#Function('return expand("%")')]]})})
+
 " most simple gcc/ ocamlopt/ ocamlc/ .. compilers create an executable which
 " is named like the current file
 call actions#AddAction('run compiler result', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return "./".expand("%:r:t")')]]})})
