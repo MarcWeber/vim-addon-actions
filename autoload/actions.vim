@@ -95,16 +95,38 @@ fun! actions#CompileRHSMake()
   return "call bg#RunQF(".string(args).", 'c', 0)"
 endfun
 
-" cmds: can be used to set errorformat etc
-" cmd: the command and arguments. current fle name will be appended by default
-fun! actions#CompileRHSSimple(cmds, cmd) abort
-  let args = funcref#Call(a:cmd)
+fun! actions#PrepareArgs(d)
+  let args = funcref#Call(a:d.cmd)
   let args = map(args,'funcref#Call(v:val)') " evaluate funcref#Function arguments
   let args = actions#ConfirmArgs(args)
 
-  let cmds = funcref#Call(a:cmds)
+  let cmds = funcref#Call(a:d.cmds)
   let cmds = map(cmds,'funcref#Call(v:val)') " evaluate funcref#Function arguments
-  return cmds + ["call bg#RunQF(".string(args).", 'c', 0)"]
+  return {'cmds': cmds, 'cmd': args}
+endf
+
+" cmds: can be used to set errorformat etc
+" cmd: the command and arguments. current file name will be appended by default
+fun! actions#CompileRHSSimple(cmds, cmd) abort
+  return actions#CompileRHSSimpleMany([{'cmds': a:cmds, 'cmd': a:cmd}])
+  " let [args, cmds] = actions#PrepareArgs(a:cmds, cmd)
+  " return cmds + ["call bg#RunQF(".string(args).", 'c', 0)"]
+endf
+
+" like CompileRHSSimple, but allow running one command after the other
+" cmds: list of {'cmds': ['viml command', 'viml command', ..], 'cmd': ['executable', 'args']}
+fun! actions#CompileRHSSimpleMany(cmds) abort
+  let command_dicts = map(a:cmds, 'actions#PrepareArgs(v:val)')
+  return 'call actions#RunCmd('.string(command_dicts).', 0)'
+  " cmds + ["call bg#RunQF(".string(args).", 'c', 0)"]
+endf
+
+fun! actions#RunCmd(list, status)
+  if a:status != 0 || empty(a:list) | return | endif 
+  let h = a:list[0]
+  let tail = a:list[1:-1]
+  for c in h.cmds | exec c | endfor
+  call bg#RunQF(h.cmd, 'c', 0, tail)
 endf
 
 fun! actions#CommandFromHistory()

@@ -39,8 +39,11 @@ call actions#AddAction('run python background', {'action': funcref#Function('act
 call actions#AddAction('run python using make', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [0]})})
 
 
-call actions#AddAction('sass', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["sass", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".css"')]]})})
-call actions#AddAction('haml', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=Syntax\ error\ on\ line\ %l:%m,Haml\ error\ on\ line\ %l:%m'], ["haml", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".html"')]]})})
+call actions#AddAction('sass',   {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["sass", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".css"')]]})})
+call actions#AddAction('haml',   {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=Syntax\ error\ on\ line\ %l:%m,Haml\ error\ on\ line\ %l:%m'], ["haml", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".html"')]]})})
+call actions#AddAction('nodejs', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f:%l'], ["node", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('coffee', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f:%l:%c:%m'], ["coffee", funcref#Function('return expand("%")')]]})})
+" call actions#AddAction('cofeescript_compile_and_run_nodejs', {'action': funcref#Function('actions#CompileRHSSimpleMany', {'args': [ {'cmds': ['set efm=%f:%l'], 'cmd': ["node", funcref#Function('return expand("%")')]}, {'cmds': ['set efm=%f:%l'], 'cmd': ["node", funcref#Function('return expand("%")')]} ]})})
 
 
 call actions#AddAction('run rust', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f:%l:%c%m'], ["rustc", funcref#Function('return expand("%")')]]})})
