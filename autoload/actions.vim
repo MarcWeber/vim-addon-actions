@@ -22,7 +22,7 @@ fun! actions#ActionNameFromUser(append)
 endf
 
 fun! actions#PrepareAction(action_name)
-  let a = copy(s:c['actions'][a:action_name])
+  let a = deepcopy(s:c['actions'][a:action_name])
   let rhs = funcref#Call(a['action'])
   " rhs is either command or list of commands
   call add(s:bound_actions, type(rhs) == type([]) ? join(rhs,'|') : rhs)

@@ -19,6 +19,7 @@ call actions#AddAction('cmake', {'action': funcref#Function('actions#CompileRHSS
 " perl: not using all of $VIMRUNTIME/compiler/perl.vim because if you dont'
 " flush valuable stdout output could be lost cause errors appear before stdout
 " dump and the compiler error format drops those lines
+call actions#AddAction('tsc', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f(%l\\\,%c):%m'], ["tsc", "-p", "."]]})})
 call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.,\%m\ at\ %f\ line\ %l\,\ at\ end\ of\ line,%m\ at\ %f\ line\ %l\,\ near'], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
@@ -43,6 +44,7 @@ call actions#AddAction('sass',   {'action': funcref#Function('actions#CompileRHS
 call actions#AddAction('haml',   {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=Syntax\ error\ on\ line\ %l:%m,Haml\ error\ on\ line\ %l:%m'], ["haml", funcref#Function('return expand("%")'), funcref#Function('return expand("%:r:t").".html"')]]})})
 call actions#AddAction('nodejs', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f:%l'], ["node", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('coffee', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['call vim_addon_errorformats#SetErrorFormat("coffee")'], ["coffee", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('coffee bare', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['call vim_addon_errorformats#SetErrorFormat("coffee")'], ["coffee", "-b", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('grunt test', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['call vim_addon_errorformats#SetErrorFormat("grunt coffee")'], ["grunt", "--stack", "--no-color", "test"]]})})
 " call actions#AddAction('cofeescript_compile_and_run_nodejs', {'action': funcref#Function('actions#CompileRHSSimpleMany', {'args': [ {'cmds': ['set efm=%f:%l'], 'cmd': ["node", funcref#Function('return expand("%")')]}, {'cmds': ['set efm=%f:%l'], 'cmd': ["node", funcref#Function('return expand("%")')]} ]})})
 
