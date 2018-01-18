@@ -19,6 +19,7 @@ call actions#AddAction('cmake', {'action': funcref#Function('actions#CompileRHSS
 " perl: not using all of $VIMRUNTIME/compiler/perl.vim because if you dont'
 " flush valuable stdout output could be lost cause errors appear before stdout
 " dump and the compiler error format drops those lines
+call actions#AddAction('webpack', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat webpack'], ["webpack"]]})})
 call actions#AddAction('tsc', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f(%l\\\,%c):%m'], ["tsc", "-p", "."]]})})
 call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.,\%m\ at\ %f\ line\ %l\,\ at\ end\ of\ line,%m\ at\ %f\ line\ %l\,\ near'], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
