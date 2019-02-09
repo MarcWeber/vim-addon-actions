@@ -14,12 +14,20 @@ let s:set_efm =  funcref#Function('return "call vim_addon_errorformats#SetErrorF
 call actions#AddAction("command from history",{'buffer':'', 'action':funcref#Function('return actions#CommandFromHistory()')})
 call actions#AddAction("write & source current vim buffer",{'buffer':'<buffer>', 'action':funcref#Function('return ["w","source %"]')})
 call actions#AddAction('run make', {'action': funcref#Function('actions#CompileRHSMake')})
+call actions#AddAction('dart2js', {'action': funcref#Function('actions#CompileRHSDart2JS')})
+
+call actions#AddAction('bucklesscript standard', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat bucklescript ocaml_long'], ["npm", "run", "build"]]})})
+call actions#AddAction('dart2js', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat dart'], ["dart2js", funcref#Function('return expand("%")'), '-o', funcref#Function('return expand("%:r").".js"')]]})})
 call actions#AddAction('cmake', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=CMake\ Error\ at\ %f:%l\ %m,%f:%l:'], funcref#Function('return ["cmake","../"]')]})})
 
 " perl: not using all of $VIMRUNTIME/compiler/perl.vim because if you dont'
 " flush valuable stdout output could be lost cause errors appear before stdout
 " dump and the compiler error format drops those lines
 call actions#AddAction('webpack', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat webpack'], ["webpack"]]})})
+call actions#AddAction('fuse', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat typescript'], ["node", "fuse"]]})})
+call actions#AddAction('tern-lint', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat webpack'], ["tern-lint"]]})})
+call actions#AddAction('tslint', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat tslint'], ["tslint", "-p", "."]]})})
+call actions#AddAction('tslint fix', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat tslint'], ["tslint", "-p", "--fix", "."]]})})
 call actions#AddAction('tsc', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f(%l\\\,%c):%m'], ["tsc", "-p", "."]]})})
 call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.,\%m\ at\ %f\ line\ %l\,\ at\ end\ of\ line,%m\ at\ %f\ line\ %l\,\ near'], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})

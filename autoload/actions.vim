@@ -95,6 +95,12 @@ fun! actions#CompileRHSMake()
   return "call bg#RunQF(".string(args).", 'c', 0)"
 endfun
 
+fun! actions#CompileRHSDart2JS()
+  let args = ["dart2js", "-O", 2, "-o", "app.js"]
+  let args = actions#ConfirmArgs(args)
+  return "call bg#RunQF(".string(args).", 'c', 0)"
+endfun
+
 fun! actions#PrepareArgs(d)
   let args = funcref#Call(a:d.cmd)
   let args = map(args,'funcref#Call(v:val)') " evaluate funcref#Function arguments
