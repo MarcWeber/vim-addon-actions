@@ -26,14 +26,25 @@ call actions#AddAction('cmake', {'action': funcref#Function('actions#CompileRHSS
 call actions#AddAction('webpack', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat webpack'], ["webpack"]]})})
 call actions#AddAction('fuse', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat typescript'], ["node", "fuse"]]})})
 call actions#AddAction('tern-lint', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat webpack'], ["tern-lint"]]})})
+
+call actions#AddAction('node ts-node/transpile', {'action': funcref#Function('actions#CompileRHSNodeTS', {'args': [1, []]})})
+call actions#AddAction('node ts-node', {'action': funcref#Function('actions#ComopileRHSNodeTS', {'args': [0, []]})})
+call actions#AddAction('node ts-node/transpile --preserve-symlinks', {'action': funcref#Function('actions#CompileRHSNodeTS', {'args': [1, ['--preserve-symlinks']]})})
+call actions#AddAction('node ts-node --preserve-symlinsk', {'action': funcref#Function('actions#ComopileRHSNodeTS', {'args': [0, ['--preserve-symlinks']]})})
+
+call actions#AddAction('ts-node transpile', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat ts-node'], ["ts-node", '-T', funcref#Function('return expand("%")')]]})})
+call actions#AddAction('ts-node', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat ts-node'], ["ts-node", funcref#Function('return expand("%")')]]})})
+
 call actions#AddAction('tslint', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat tslint'], ["tslint", "-p", "."]]})})
-call actions#AddAction('tslint fix', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat tslint'], ["tslint", "-p", "--fix", "."]]})})
+call actions#AddAction('tslint fix', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat tslint'], ["tslint", "--fix", "-p", "."]]})})
 call actions#AddAction('tsc', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f(%l\\\,%c):%m'], ["tsc", "-p", "."]]})})
 call actions#AddAction('perl current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=\%m\ at\ %f\ line\ %l.,\%m\ at\ %f\ line\ %l\,\ at\ end\ of\ line,%m\ at\ %f\ line\ %l\,\ near'], ["perl", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["gcc", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('shebang (run this script)', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return expand("%:p")')]]})})
 
+call actions#AddAction('latex current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["latex", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('pdflatex current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["pdflatex", funcref#Function('return expand("%")')]]})})
 
 call actions#AddAction('run ddc background', {'action': funcref#Function('actions_more#RunDDCRHS', {'args': [1]})})
 
@@ -58,7 +69,8 @@ call actions#AddAction('grunt test', {'action': funcref#Function('actions#Compil
 " call actions#AddAction('cofeescript_compile_and_run_nodejs', {'action': funcref#Function('actions#CompileRHSSimpleMany', {'args': [ {'cmds': ['set efm=%f:%l'], 'cmd': ["node", funcref#Function('return expand("%")')]}, {'cmds': ['set efm=%f:%l'], 'cmd': ["node", funcref#Function('return expand("%")')]} ]})})
 
 
-call actions#AddAction('run rust', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['set efm=%f:%l:%c%m'], ["rustc", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('run rust', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat rust'], ["rustc", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('run cargo build', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [['Errorformat rust'], ["cargo", "build"]]})})
 
 " most simple gcc/ ocamlopt/ ocamlc/ .. compilers create an executable which
 " is named like the current file

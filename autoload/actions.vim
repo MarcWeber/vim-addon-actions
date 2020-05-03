@@ -89,6 +89,19 @@ fun! actions#SetActionOnWrite(any, bang)
   endif
 endf
 
+
+fun! actions#CompileRHSNodeTS(transpile, args)
+  let t = a:transpile ? '/transpile-only' : ''
+  if file_readable("tsconfig.json") && readfile('tsconfig.json')[0] =~ '"path"' 
+    let args = ["node"] + a:args + [ "-r", "ts-node/register".t, "-r", "tsconfig-paths/register", "", [expand('%')]
+  else
+    let args = ["node"] + a:args + [ "-r", "ts-node/register".t, expand('%')]
+  endif
+  " let args = actions#ConfirmArgs(args)
+  return actions#CompileRHSSimpleMany([{'cmds': ['Errorformat ts-node'], 'cmd': args}])
+  " return "call bg#RunQF(".string(args).", 'c', 0)"
+endfun
+
 fun! actions#CompileRHSMake()
   let args = ["make"]
   let args = actions#ConfirmArgs(args)
