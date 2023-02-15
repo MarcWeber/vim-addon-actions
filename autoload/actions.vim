@@ -11,14 +11,25 @@ endif
 let s:c['bound_actions'] = get(s:c,'bound_actions',[])
 let s:bound_actions = s:c['bound_actions']
 
-fun! actions#AddAction(label,dict)
-  let s:c['actions'][a:label] = a:dict
+fun! actions#AddAction(label, dict)
+  let a:dict.label = a:label
+  call actions#AddAction2(a:dict)
+endf
+
+fun! actions#AddAction2(dict)
+  " same as AddAction but with label in dictionary
+  let s:c['actions'][a:dict.label] = a:dict
 endf
 
 fun! actions#ActionNameFromUser(append)
-  let labels = map(keys(s:c['actions']),'v:val." ".get(s:c["actions"][v:val],"buffer","")')
+  let fs = [ '!has_key(v:val, "if") || eval(v:val.if)'
+         \ , '!has_key(v:val, "filetype_regex") || expand("%:e") =~  v:val.filetype_regex' ]
+  let actions = filter(values(s:c.actions), '('.join(fs, ' ) && ( ').')' )
+  let f =  'has_key(v:val, "filetype_regex") && expand("%:e") =~  v:val.filetype_regex'
+  let actions = filter(copy(actions), f) + filter(copy(actions),'!('.f.')')
+  let labels = map(copy(actions),'v:val.label." ".get(v:val,"buffer","")')
   let index = tlib#input#List('si', 'select action '.a:append, labels)
-  return keys(s:c['actions'])[index-1]
+  return actions[index-1].label
 endf
 
 fun! actions#PrepareAction(action_name)
@@ -92,8 +103,8 @@ endf
 
 fun! actions#CompileRHSNodeTS(transpile, args)
   let t = a:transpile ? '/transpile-only' : ''
-  if file_readable("tsconfig.json") && readfile('tsconfig.json')[0] =~ '"path"' 
-    let args = ["node"] + a:args + [ "-r", "ts-node/register".t, "-r", "tsconfig-paths/register", "", [expand('%')]
+  if file_readable("tsconfig.json") && join(readfile('tsconfig.json', 1), "\n") =~ '"paths"'
+    let args = ["node"] + a:args + [ "-r", "ts-node/register".t, "-r", "tsconfig-paths/register", expand('%')]
   else
     let args = ["node"] + a:args + [ "-r", "ts-node/register".t, expand('%')]
   endif

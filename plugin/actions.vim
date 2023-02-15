@@ -43,6 +43,8 @@ call actions#AddAction('gcc -gdbb current file', {'action': funcref#Function('ac
 call actions#AddAction('g++ -gdbb current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["g++", '-o', funcref#Function('return expand("%:r:t")'), '-ggdb', '-O0', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('shebang (run this script)', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], [funcref#Function('return expand("%:p")')]]})})
 
+call actions#AddAction('rubber current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["rubber", funcref#Function('return expand("%")')]]})})
+call actions#AddAction('rubber pdf current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["rubber", '--pdf', funcref#Function('return expand("%")')]]})})
 call actions#AddAction('latex current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["latex", funcref#Function('return expand("%")')]]})})
 call actions#AddAction('pdflatex current file', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[], ["pdflatex", funcref#Function('return expand("%")')]]})})
 
@@ -55,7 +57,7 @@ for cmd in ['rake', 'drake', 'make']
   call actions#AddAction(cmd.' -j custom error format', {'action': funcref#Function('actions#CompileRHSSimple', {'args': [[s:set_efm], [cmd, '-j', funcref#Function('return split(system("nproc"), "\n")[0]')]]})})
 endfor
 
-call actions#AddAction('run php background', {'action': funcref#Function('actions_more#RunPHPRHS', {'args': [1]})})
+call actions#AddAction('run php background', {'filetype_regex' : 'php$', 'action': funcref#Function('actions_more#RunPHPRHS', {'args': [1]})})
 call actions#AddAction('run python background', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [1]})})
 call actions#AddAction('run python using make', {'action': funcref#Function('actions_more#RunPythonRHS', {'args': [0]})})
 
